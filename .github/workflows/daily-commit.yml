@@ -1,0 +1,41 @@
+name: Daily Commit
+
+on:
+  schedule:
+    # Runs at 21:00 IST (15:30 UTC) daily
+    - cron: '30 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  GIT_USER_NAME: your-github-username
+  # Use your public GitHub noreply email (Settings -> Emails)
+  GIT_USER_EMAIL: your-github-username@users.noreply.github.com
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Make a small change
+        run: |
+          echo "Automated update $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> daily_log.txt
+
+      - name: Commit & Push
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: daily commit $(date -u '+%Y-%m-%d')"
+          git push
