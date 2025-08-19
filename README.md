@@ -18,3 +18,4 @@ tutorial-hell-exit/
 │── .github/workflows/daily-commit.yml
 │── Day-01/ ... Day-30/
 ```
+DSA and System Design should go parallel
