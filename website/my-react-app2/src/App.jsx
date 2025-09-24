@@ -1,6 +1,12 @@
-import MoodBoardItem from "./MoodBoardItem.jsx"
+import { MoodBoard } from "./MoodBoard.jsx"
+
 function App() {
-    <MoodBoardItem />
+    return (
+      <div>
+        < MoodBoard />
+      </div>
+      
+    )
   }
 
 export default App
